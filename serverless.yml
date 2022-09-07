@@ -1,0 +1,30 @@
+org: stamblew
+app: aws-rekognition
+service: image-analysis
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  region: ap-southeast-1
+  iam:
+    role:
+      name: img-analysis-project-role
+      statements:
+        - Effect: 'Allow'
+          Resource: '*'
+          Action:
+            - rekognition:DetectLabels
+        - Effect: 'Allow'
+          Resource: '*'
+          Action:
+            - translate:TranslateText
+
+functions:
+  img-analysis:
+    handler: handler.main
+    events:
+      - http:
+          path: analyse
+          method: get
