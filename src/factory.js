@@ -9,7 +9,7 @@ const detectLabelsCommand = new DetectLabelsCommand({
   MaxLabels: 3
 });
 
-const translateCommand = new TranslateTextCommand({
+const translateTextCommand = new TranslateTextCommand({
   SourceLanguageCode: 'en',
   TargetLanguageCode: 'pt'
 });
@@ -18,7 +18,7 @@ const handler = new Handler({
   rekoClient,
   translateClient,
   detectLabelsCommand,
-  translateCommand
+  translateTextCommand
 });
 
 module.exports = handler.main.bind(handler);

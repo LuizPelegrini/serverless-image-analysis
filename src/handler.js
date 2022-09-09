@@ -13,6 +13,30 @@ class Handler {
         this.translateTextCommand = translateTextCommand;
     }
 
+    async translateText(text) {
+        this.translateTextCommand.input.Text = text;
+    
+        const { TranslatedText } = await this.translateClient.send(this.translateTextCommand);
+      
+        return TranslatedText;
+    }
+
+    constructEnglishText (labels) {
+        const text = labels.reduce((acc, elem, currentIndex) => {
+            acc += `${elem.Name} with ${elem.Confidence.toFixed(2)}% of confidence`;
+    
+            if(currentIndex < labels.length - 1){
+              acc += ' and '
+            } else {
+              acc += '.'
+            }
+    
+            return acc;
+        }, '');
+
+        return text;
+    }
+
     async detectImageLabels(buffer) {
         const Image = {
             Bytes: buffer
@@ -47,11 +71,13 @@ class Handler {
             const imgBuffer = await this.getImageBuffer(imageURL);
             console.log('detecting image...');
             const labels = await this.detectImageLabels(imgBuffer);
-            console.log(labels);
+            console.log('translating text...');
+            const englishText = this.constructEnglishText(labels);
+            const translatedText = await this.translateText(englishText);
 
             return {
                 statusCode: 200,
-                body: 'Hello World!'
+                body: translatedText
             };
         } catch (error) {
             console.error('ERROR::', error.stack);

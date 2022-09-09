@@ -8,7 +8,7 @@ describe('Image Analyser test suite', () => {
     test('it should analyse the image successfully and return response in portuguese', async () => {
         const expected = {
             statusCode: 200,
-            body: ''
+            body: 'Lagarto com 99,85% de confiança e Réptil com 99,85% de confiança e Crocodilo com 97,77% de confiança.'
         };
 
         const result = await main(requestMock);
