@@ -57,10 +57,10 @@ class Handler {
     }
 
     async main(event){
-        const { imageURL } = event.queryStringParameters;
+        const { queryStringParameters } = event;
 
         try {
-            if(!imageURL){
+            if(!queryStringParameters || !queryStringParameters.imageURL){
                 return {
                     statusCode: 400,
                     body: 'An image url is required'
