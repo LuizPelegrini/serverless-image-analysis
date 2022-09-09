@@ -67,6 +67,8 @@ class Handler {
                 };
             }
 
+            const { imageURL } = queryStringParameters;
+
             console.log('downloading image...');
             const imgBuffer = await this.getImageBuffer(imageURL);
             console.log('detecting image...');
