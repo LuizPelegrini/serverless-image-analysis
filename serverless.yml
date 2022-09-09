@@ -23,8 +23,8 @@ provider:
 
 functions:
   img-analysis:
-    handler: handler.main
+    handler: src/index.main
     events:
       - http:
-          path: analyse
+          path: /analyse
           method: get
