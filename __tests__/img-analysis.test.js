@@ -15,13 +15,23 @@ describe('Image Analyser test suite', () => {
         expect(result).toStrictEqual(expected);
     });
 
-    test('it should return status code 400 if imageUrl query parameter is not provided', async () => {
+    test('it should return status code 400 if imageURL query parameter is not provided', async () => {
         const expected = {
             statusCode: 400,
             body: 'An image url is required'
         };
 
         const result = await main({ queryStringParameters: {} });
+        expect(result).toStrictEqual(expected);
+    });
+
+    test('it should return status code 500 if imageURL query parameter is invalid', async () => {
+        const expected = {
+            statusCode: 500,
+            body: 'Internal Server Error'
+        };
+
+        const result = await main({ queryStringParameters: { imageURL: 'abc' } });
         expect(result).toStrictEqual(expected);
     });
 });
